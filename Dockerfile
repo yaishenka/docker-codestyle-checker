@@ -8,4 +8,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   ca-certificates \
   gcc \
   valgrind \
+  g++ \
+  python3.8 \
  && rm -rf /var/lib/apt/lists/*
