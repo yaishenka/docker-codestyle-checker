@@ -7,5 +7,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   ssh \
   ca-certificates \
   gcc \
-  valgrind
+  valgrind \
  && rm -rf /var/lib/apt/lists/*
