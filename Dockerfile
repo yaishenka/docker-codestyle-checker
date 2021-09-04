@@ -10,4 +10,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   valgrind \
   g++ \
   python3.8 \
+  clang-12 \
  && rm -rf /var/lib/apt/lists/*
