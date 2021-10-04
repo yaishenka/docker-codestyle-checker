@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   openssl \
   libssl-dev \
   libgtest-dev \
+  make \
   cmake
 
 RUN apt install -y lsb-release wget software-properties-common
