@@ -32,6 +32,10 @@ RUN update-alternatives --install /usr/bin/cc cc /usr/bin/clang-13 100 && \
     update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-13 100
 
 # Build GTest library
-RUN cd /usr/src/googletest && \
-    cmake -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-copy" . && \
-    cmake -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-copy" --build . --target install
+RUN cd /usr/src/gtest && \
+    cmake -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-copy" CMakeLists.txt && \
+    make && \
+    cp *.a /usr/lib
+
+RUN ln -s /usr/lib/libgtest.a /usr/local/lib/gtest/libgtest.a
+RUN ln -s /usr/lib/libgtest_main.a /usr/local/lib/gtest/libgtest_main.a
