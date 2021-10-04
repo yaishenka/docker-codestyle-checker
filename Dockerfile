@@ -23,8 +23,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN apt install -y lsb-release wget software-properties-common
 RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 RUN cd /usr/src/gtest
+WORKDIR "/usr/src/gtest"
 RUN cmake CMakeLists.txt
 RUN make
 RUN cp *.a /usr/lib
-RUN cd ~/
+WORKDIR "/"
 RUN rm -rf /var/lib/apt/lists/*
