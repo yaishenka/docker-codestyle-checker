@@ -13,8 +13,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   valgrind \
   g++ \
   python3.8 \
-  wget
+  wget \
+  libboost-all-dev \
+  openssl \
+  libssl-dev \
+  libgtest-dev
 
 RUN apt install -y lsb-release wget software-properties-common
 RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+RUN cd /usr/src/gtest
+RUN cmake CMakeLists.txt
+RUN make
+RUN cp *.a /usr/lib
+RUN cd ~/
 RUN rm -rf /var/lib/apt/lists/*
