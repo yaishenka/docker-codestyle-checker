@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libboost-all-dev \
   openssl \
   libssl-dev \
-  libgtest-dev
+  libgtest-dev \
+  cmake
 
 RUN apt install -y lsb-release wget software-properties-common
 RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
