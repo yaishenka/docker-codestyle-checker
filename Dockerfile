@@ -22,10 +22,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN apt install -y lsb-release wget software-properties-common
 RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
-RUN cd /usr/src/gtest
-WORKDIR "/usr/src/gtest"
-RUN cmake CMakeLists.txt
-RUN make
-RUN cp *.a /usr/lib
-WORKDIR "/"
-RUN rm -rf /var/lib/apt/lists/*
+
+
+# Alias cc, c++, clang and clang-format to Clang 13
+RUN update-alternatives --install /usr/bin/cc cc /usr/bin/clang-13 100 && \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-13 100 && \
+    update-alternatives --install /usr/bin/clang clang /usr/bin/clang-13 100 && \
+    update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-13 100
+
+# Build GTest library
+RUN cd /usr/src/googletest && \
+    cmake . && \
+    cmake --build . --target install
