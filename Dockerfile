@@ -33,5 +33,5 @@ RUN update-alternatives --install /usr/bin/cc cc /usr/bin/clang-13 100 && \
 
 # Build GTest library
 RUN cd /usr/src/googletest && \
-    cmake . && \
-    cmake --build . --target install
+    cmake -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-copy" . && \
+    cmake -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-copy" --build . --target install
