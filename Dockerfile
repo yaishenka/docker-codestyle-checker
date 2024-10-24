@@ -16,18 +16,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   openssl \
   libssl-dev \
   make \
-  cmake
+  cmake \
+  lsb-release \
+  wget \
+  software-properties-common
 
 # Installs latest llvm version
-RUN apt install -y lsb-release wget software-properties-common
-RUN wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh
-RUN ./llvm.sh 18 && apt-get install -y clang-tidy-18 clang-format-18
+RUN wget https://apt.llvm.org/llvm.sh \
+    && chmod +x llvm.sh \
+    && ./llvm.sh 18 \
+    && apt-get install -y clang-tidy-18 clang-format-18 \
+    && bash -c 'for item in /usr/bin/clang*-18; do ln -s $item ${item%-18}; done' \
+    && rm llvm.sh && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Adds a symlink for each versioned file, e.g. clang++-18 → clang++ etc
-RUN bash -c 'for item in /usr/bin/clang*-18; do ln -s $item ${item%-18}; done'
-
-# Clears extra data
-RUN rm llvm.sh && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
 RUN apt install -y g++
@@ -35,9 +36,9 @@ RUN apt install -y g++
 # Adds symlinks wrt old scripts
 RUN ln -s /usr/bin/clang++-18 /usr/bin/clang++-13
 
-RUN git clone --depth=1 -b main -q https://github.com/google/googletest.git /googletest
-RUN mkdir -p /googletest/build
-WORKDIR /googletest/build
-RUN cmake .. && make && make install
-WORKDIR /
-RUN rm -rf /googletest
+RUN git clone --depth=1 -b main -q https://github.com/google/googletest.git /googletest \
+    && mkdir -p /googletest/build
+    && cd /googletest/build
+    && cmake .. && make && make install
+    && cd /
+    && rm -rf /googletest
