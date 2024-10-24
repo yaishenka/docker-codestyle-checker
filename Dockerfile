@@ -37,8 +37,8 @@ RUN apt install -y g++
 RUN ln -s /usr/bin/clang++-18 /usr/bin/clang++-13
 
 RUN git clone --depth=1 -b main -q https://github.com/google/googletest.git /googletest \
-    && mkdir -p /googletest/build
-    && cd /googletest/build
-    && cmake .. && make && make install
-    && cd /
+    && mkdir -p /googletest/build \
+    && cd /googletest/build \
+    && cmake .. && make && make install \
+    && cd / \
     && rm -rf /googletest
