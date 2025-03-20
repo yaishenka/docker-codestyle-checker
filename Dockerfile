@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   cmake \
   lsb-release \
   wget \
+  jq \
   software-properties-common
 
 # Installs latest llvm version
